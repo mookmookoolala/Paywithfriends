@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+
+        .create-group-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .groups-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .groups-list li {
+            margin-bottom: 10px;
+        }
+
+        .groups-list a {
+            display: block;
+            padding: 15px;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .groups-list a:hover {
+            background-color: #e9ecef;
+        }
+
+        .no-groups {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Expense Splitter</h1>
+
+        <h2>Create New Group</h2>
+        <form action="/create_group" method="post" class="create-group-form">
+            <input type="text" 
+                   name="name" 
+                   placeholder="Enter group name (e.g., Lunch, Trip, Rent)" 
+                   required>
+            <button type="submit">Create Group</button>
+        </form>
+
+        <h2>Your Groups</h2>
+        {% if groups %}
+            <ul class="groups-list">
+            {% for id, group in groups.items() %}
+                <li>
+                    <a href="/group/{{id}}">
+                        {{group.name}}
+                        {% if group.members %}
+                            <small>({{group.members|length}} members)</small>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-groups">No groups yet. Create your first group to get started!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
