@@ -149,8 +149,8 @@
                <p>Split between:</p>
                {% for member in group.members %}
                <label>
-                   <input type="checkbox" name="split_between" value="{{member}}">
-                   {{member}}
+                   <input type="checkbox" name="split_between" value="{{member.name}}">
+                   {{member.name}}
                </label>
                {% endfor %}
            </div>
@@ -164,12 +164,16 @@
                <strong>{{expense.paid_by}}</strong> paid 
                <strong>${{expense.amount}}</strong> for 
                {{expense.description}}<br>
-               <small>Split between: {{expense.split_between|join(', ')}}</small>
+               <small>Split between: 
+                    {% for split in expense.splits %}
+                        {{split.member_name}}{% if not loop.last %}, {%endif %}
+                    {% endfor %}
+               </small>
            </li>
        {% endfor %}
        </ul>
 
-       <h2>Balances</h2>
+       <h2>Balances</h2> 
        <ul class="balances-list">
        {% for person, amount in balances.items() %}
            <li class="{% if amount > 0 %}owed{% else %}owes{% endif %}">
@@ -184,6 +188,12 @@
            </li>
        {% endfor %}
        </ul>
+
+        <h2>Settlement</h2>
+
+        <h2>Total</h2>
+        <ul class="balances-list"></ul>
+            
 
        <a href="/" class="back-link">← Back to Home</a>
    </div>

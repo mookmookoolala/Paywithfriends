@@ -107,9 +107,9 @@
         <h2>Your Groups</h2>
         {% if groups %}
             <ul class="groups-list">
-            {% for id, group in groups.items() %}
+            {% for group in groups %}
                 <li>
-                    <a href="/group/{{id}}">
+                    <a href="/group/{{group.id}}">
                         {{group.name}}
                         {% if group.members %}
                             <small>({{group.members|length}} members)</small>
